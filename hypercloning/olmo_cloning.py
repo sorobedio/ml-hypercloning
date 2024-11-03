@@ -9,15 +9,10 @@ import numpy as np
 import torch
 from transformers import AutoModelForCausalLM
 
-from hypercloning.common import (
-    add_noise,
-    clone_layer_norm,
-    clone_linear_layer,
-    clone_matrix,
-    rename_config,
-    scale_linear_layer,
-    scaledLinear,
-)
+from hypercloning.common import (add_noise, clone_layer_norm,
+                                 clone_linear_layer, clone_matrix,
+                                 rename_config, scale_linear_layer,
+                                 scaledLinear)
 
 
 class clonedPositionalEmbedding(torch.nn.Module):

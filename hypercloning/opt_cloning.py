@@ -9,14 +9,9 @@ import numpy as np
 import torch
 from transformers import OPTForCausalLM
 
-from hypercloning.common import (
-    clone_layer_norm,
-    clone_linear_layer,
-    clone_matrix,
-    rename_config,
-    scale_linear_layer,
-    scaledLinear,
-)
+from hypercloning.common import (clone_layer_norm, clone_linear_layer,
+                                 clone_matrix, rename_config,
+                                 scale_linear_layer, scaledLinear)
 
 
 def clone_positional_embedding_layer(dst_layer, src_layer):

@@ -7,18 +7,12 @@ import copy
 
 import numpy as np
 import torch
-from transformers import GemmaForCausalLM, Gemma2ForCausalLM
+from transformers import Gemma2ForCausalLM, GemmaForCausalLM
 
-from hypercloning.common import (
-    add_noise,
-    clone_layer_norm,
-    clone_linear_layer,
-    clone_matrix,
-    clone_rms_norm,
-    rename_config,
-    scale_linear_layer,
-    scaledLinear,
-)
+from hypercloning.common import (add_noise, clone_layer_norm,
+                                 clone_linear_layer, clone_matrix,
+                                 clone_rms_norm, rename_config,
+                                 scale_linear_layer, scaledLinear)
 
 
 def clone_gemma_attention(dst_layer, src_layer, snr_db=None):

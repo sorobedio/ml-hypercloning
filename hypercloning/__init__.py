@@ -4,7 +4,8 @@
 #
 
 from hf_olmo.configuration_olmo import OLMoConfig
-from transformers import GemmaConfig, Gemma2Config, GPTNeoXConfig, LlamaConfig, OPTConfig
+from transformers import (Gemma2Config, GemmaConfig, GPTNeoXConfig,
+                          LlamaConfig, OPTConfig)
 
 from hypercloning.gemma_cloning import clone_gemma, clone_gemma2
 from hypercloning.llama_cloning import clone_llama
@@ -20,6 +21,7 @@ REGISTERED_CLONING_FUNCTIONS = {
     "OLMoConfig": clone_olmo,
     "GPTNeoXConfig": clone_pythia,
 }
+
 
 def cloneModel(
     model, embedding_dim_multiplier: int, up_project_multiplier: int, **kwargs
@@ -46,7 +48,7 @@ def cloneModel(
         Cloned model with expanded parameters.
     """
     cloning_function_key = str(type(model.config)).split(".")[-1][:-2].strip()
-    
+
     assert (
         cloning_function_key in REGISTERED_CLONING_FUNCTIONS
     ), f"cloning is not supported for model config of type {cloning_function_key}"
@@ -58,4 +60,3 @@ def cloneModel(
         up_project_multiplier=up_project_multiplier,
         **kwargs,
     )
-    

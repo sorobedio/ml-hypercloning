@@ -32,7 +32,7 @@ def main():
         )
         print(f"******** source network:\n{src_network}\n")
         dst_network = cloneModel(
-            src_network, embedding_dim_multiplier=2, up_project_multiplier=1, snr_db=10
+            src_network, embedding_dim_multiplier=2, up_project_multiplier=2
         )
         print(f"******** target network:\n{dst_network}\n")
         src_network.to(device)
