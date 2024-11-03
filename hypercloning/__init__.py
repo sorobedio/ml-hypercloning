@@ -4,22 +4,22 @@
 #
 
 from hf_olmo.configuration_olmo import OLMoConfig
-from transformers import GemmaConfig, GPTNeoXConfig, LlamaConfig, OPTConfig
+from transformers import GemmaConfig, Gemma2Config, GPTNeoXConfig, LlamaConfig, OPTConfig
 
-from hypercloning.gemma_cloning import clone_gemma
-from hypercloning.llama_cloning import clone_llama2
+from hypercloning.gemma_cloning import clone_gemma, clone_gemma2
+from hypercloning.llama_cloning import clone_llama
 from hypercloning.olmo_cloning import clone_olmo
 from hypercloning.opt_cloning import clone_opt
 from hypercloning.pythia_cloning import clone_pythia
 
 REGISTERED_CLONING_FUNCTIONS = {
-    str(LlamaConfig): clone_llama2,
-    str(GemmaConfig): clone_gemma,
-    str(OPTConfig): clone_opt,
-    str(OLMoConfig): clone_olmo,
-    str(GPTNeoXConfig): clone_pythia,
+    "LlamaConfig": clone_llama,
+    "GemmaConfig": clone_gemma,
+    "Gemma2Config": clone_gemma2,
+    "OPTConfig": clone_opt,
+    "OLMoConfig": clone_olmo,
+    "GPTNeoXConfig": clone_pythia,
 }
-
 
 def cloneModel(
     model, embedding_dim_multiplier: int, up_project_multiplier: int, **kwargs
@@ -45,14 +45,17 @@ def cloneModel(
     Returns:
         Cloned model with expanded parameters.
     """
+    cloning_function_key = str(type(model.config)).split(".")[-1][:-2].strip()
+    
     assert (
-        str(type(model.config)) in REGISTERED_CLONING_FUNCTIONS
-    ), f"cloning is not supported for model config of type {type(model.config)}"
-    cloning_function = REGISTERED_CLONING_FUNCTIONS[str(type(model.config))]
-    print("cloning the network...")
+        cloning_function_key in REGISTERED_CLONING_FUNCTIONS
+    ), f"cloning is not supported for model config of type {cloning_function_key}"
+    cloning_function = REGISTERED_CLONING_FUNCTIONS[cloning_function_key]
+    print(f"cloning the network using {cloning_function} ...")
     return cloning_function(
         model,
         embedding_dim_multiplier=embedding_dim_multiplier,
         up_project_multiplier=up_project_multiplier,
         **kwargs,
     )
+    

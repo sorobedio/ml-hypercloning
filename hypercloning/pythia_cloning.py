@@ -7,12 +7,20 @@ import copy
 
 import numpy as np
 import torch
-from transformers import (AutoModelForCausalLM, AutoTokenizer, GPTNeoXConfig,
-                          GPTNeoXForCausalLM)
+from transformers import (
+    AutoModelForCausalLM,
+    AutoTokenizer,
+    GPTNeoXConfig,
+    GPTNeoXForCausalLM,
+)
 
-from hypercloning.common import (add_noise, clone_layer_norm,
-                                 clone_linear_layer, clone_matrix,
-                                 rename_config)
+from hypercloning.common import (
+    add_noise,
+    clone_layer_norm,
+    clone_linear_layer,
+    clone_matrix,
+    rename_config,
+)
 
 
 def clone_pythia_qkv_layer(

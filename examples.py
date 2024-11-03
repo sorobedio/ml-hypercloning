@@ -12,18 +12,19 @@ from hypercloning import cloneModel
 
 hf_token = os.environ["HF_TOKEN"]
 example_models = [
-    "facebook/opt-350m",
-    "EleutherAI/pythia-410m-deduped",
+    "meta-llama/Llama-3.2-1B",
+    "google/gemma-2-2b-it",
+    "meta-llama/Llama-2-7b-hf",
     "allenai/OLMO-1b",
     "google/gemma-2b",
-    "meta-llama/Llama-2-7b-hf",
+    "EleutherAI/pythia-410m-deduped",
+    "facebook/opt-350m",
 ]
 
 
 def main():
     query = "The capital of France is"
     device = "cpu"
-    snr_db = 10
     for hf_path in example_models:
         print(f"\n\n\n##########################{hf_path}##########################")
         src_network = AutoModelForCausalLM.from_pretrained(
@@ -31,7 +32,7 @@ def main():
         )
         print(f"******** source network:\n{src_network}\n")
         dst_network = cloneModel(
-            src_network, embedding_dim_multiplier=2, up_project_multiplier=1, snr_db=snr_db
+            src_network, embedding_dim_multiplier=2, up_project_multiplier=1, snr_db=10
         )
         print(f"******** target network:\n{dst_network}\n")
         src_network.to(device)

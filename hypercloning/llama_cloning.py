@@ -9,13 +9,19 @@ import numpy as np
 import torch
 from transformers import LlamaForCausalLM
 
-from hypercloning.common import (clone_layer_norm, clone_linear_layer,
-                                 clone_matrix, clone_rms_norm, rename_config,
-                                 scale_linear_layer, scaledLinear)
+from hypercloning.common import (
+    clone_layer_norm,
+    clone_linear_layer,
+    clone_matrix,
+    clone_rms_norm,
+    rename_config,
+    scale_linear_layer,
+    scaledLinear,
+)
 from hypercloning.gemma_cloning import clone_gemma_attention
 
 
-def clone_llama2(
+def clone_llama(
     src_network,
     embedding_dim_multiplier: int = 1,
     up_project_multiplier: int = 1,
@@ -41,12 +47,12 @@ def clone_llama2(
     config = copy.deepcopy(src_network.config)
     config.hidden_size = embedding_dim_multiplier * config.hidden_size
     config.intermediate_size = up_project_multiplier * config.intermediate_size
-    if config.num_key_value_heads == config.num_attention_heads:
+    if config.num_key_value_heads != 1:
         config.num_key_value_heads = (
             embedding_dim_multiplier * config.num_key_value_heads
         )
     config.num_attention_heads = embedding_dim_multiplier * config.num_attention_heads
-
+    config.tie_word_embeddings = False
     # rename the config according to expansion factors
     config = rename_config(config, embedding_dim_multiplier, up_project_multiplier)
 

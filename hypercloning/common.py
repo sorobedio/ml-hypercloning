@@ -259,7 +259,7 @@ def rename_config(
     if up_project_multiplier > 1:
         config._name_or_path += f"-{up_project_multiplier}xffn"
     return config
-
+    
 
 class scaledLinear(torch.nn.Module):
     """
@@ -279,6 +279,8 @@ class scaledLinear(torch.nn.Module):
         super().__init__()
         self.layer = layer
         self.scaler = scaler
+        self.weight = self.layer.weight 
+        self.bias = self.layer.bias
 
     def forward(self, x):
         weight = self.layer.weight * self.scaler
