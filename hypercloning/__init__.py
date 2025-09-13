@@ -3,7 +3,7 @@
 # Copyright (C) 2020 Apple Inc. All Rights Reserved.
 #
 
-from hf_olmo.configuration_olmo import OLMoConfig
+# from hf_olmo.configuration_olmo import OLMoConfig
 from transformers import (Gemma2Config, GemmaConfig, GPTNeoXConfig,
                           LlamaConfig, OPTConfig)
 
@@ -18,7 +18,7 @@ REGISTERED_CLONING_FUNCTIONS = {
     "GemmaConfig": clone_gemma,
     "Gemma2Config": clone_gemma2,
     "OPTConfig": clone_opt,
-    "OLMoConfig": clone_olmo,
+    # "OLMoConfig": clone_olmo,
     "GPTNeoXConfig": clone_pythia,
 }
 
