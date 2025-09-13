@@ -42,8 +42,10 @@ def main():
     print(f"✅ Saved cloned model and tokenizer to: {args.out_dir}")
 
     # Quick sanity check (reload)
-    _ = AutoModelForCausalLM.from_pretrained(args.out_dir)
+    md = AutoModelForCausalLM.from_pretrained(args.out_dir)
     _tok = AutoTokenizer.from_pretrained(args.out_dir)
+    print(md)
+
     print("🔁 Reload test succeeded.")
 
 if __name__ == "__main__":
