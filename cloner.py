@@ -10,9 +10,9 @@ def main():
                         help="HF model id or local path for the source model.")
     parser.add_argument("--out_dir", type=str, default="../Basemodels/opt-350m-hypercloned-x2emb-x2ffn",
                         help="Directory to save the destination model.")
-    parser.add_argument("--emb_mult", type=float, default=2.0,
+    parser.add_argument("--emb_mult", type=int, default=2,
                         help="Embedding dimension multiplier for cloning.")
-    parser.add_argument("--ffn_mult", type=float, default=2.0,
+    parser.add_argument("--ffn_mult", type=int, default=2,
                         help="FFN (up_project) multiplier for cloning.")
     args = parser.parse_args()
 
